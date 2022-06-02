@@ -5,6 +5,11 @@ export default {
 	components: {
 		City,
 	},
+	data() {
+		return {
+			api_key: "4090cf573ee1724ee3524ada332cb41c",
+		};
+	},
 };
 </script>
 
