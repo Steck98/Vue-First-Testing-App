@@ -12,7 +12,7 @@ export default {
 			let getActualDate = new Date();
 			const date = `${getActualDate.getDate()}/${
 				getActualDate.getMonth() + 1
-			}/${getActualDate.getFullYear()}`;
+			}/${getActualDate.getFullYear()} ${getActualDate.getUTCHours()}:${getActualDate.getUTCMinutes()}`;
 			console.log(getActualDate);
 			return date;
 		},
