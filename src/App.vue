@@ -1,5 +1,6 @@
 <script>
 import City from "./components/City.vue";
+
 export default {
 	name: "App",
 	components: {
@@ -11,28 +12,13 @@ export default {
 			api_key: "4090cf573ee1724ee3524ada332cb41c",
 		};
 	},
-	methods: {
-		async getData() {
-			try {
-				const response = await this.$http.get(
-					"http://jsonplaceholder.typicode.com/posts"
-				);
-
-				this.posts = response.data;
-			} catch (error) {
-				console.log(error);
-			}
-		},
-		created() {
-			this.getData();
-		},
-	},
+	methods: {},
 };
 </script>
 
 <template>
 	<div class="page__template">
-		<div class="page__City--Wrapper">
+		<div>
 			<City title="Weather App" />
 		</div>
 	</div>
@@ -47,9 +33,9 @@ export default {
 	height: 100vh;
 	display: flex;
 	background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
-		url(https://pixabay.com/get/g13e123c8ce831a17946bd99007db89ad8020a89a566d5ac69b6ef1ca9e8700fd188dec65c45b5d213146851473193fc4de85b803c23ecc34a4aafcc53933a3c7953f36450377e93326dbe2dcc3742644_1920.jpg);
+		url(https://pixabay.com/get/g0e163bb62ec8e19cb802b90cdd0e12d7ea9f576cc3499a1395a870e1c6e636bb9f18aba6a0048b049c2324d8546ad07fb19382a80d24bf46550c5fbd70553ce1ceaa53c951a72d973fc7ca8f1a6e05a0_1920.jpg);
 }
-.page__City--Wrapper {
+.page__template > div {
 	margin: auto;
 }
 </style>

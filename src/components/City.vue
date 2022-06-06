@@ -1,29 +1,59 @@
 <script>
 import Date from "./Date.vue";
-import Temperature from "./Temperature.vue";
 
 export default {
 	name: "City",
 	props: {
 		title: String,
+		cityName: String,
 	},
-	components: { Date, Temperature },
+	components: { Date },
+	data() {
+		return {
+			api_key: "4090cf573ee1724ee3524ada332cb41c",
+			url_base: "https://api.openweathermap.org/data/3.0/",
+			query: "",
+			weather: {},
+		};
+	},
+	methods: {
+		fetchWeather(e) {
+			if (e.key == "Enter") {
+				fetch(
+					`${this.url_base}weather?q=${this.query}&units=metric&APPID=${this.api_key}`
+				)
+					.then((res) => {
+						return res.json();
+					})
+					.then(this.setResults);
+			}
+		},
+		setResults(results) {
+			this.weather = results;
+		},
+	},
 };
 </script>
 
 <template>
 	<div class="Header">
 		<h1 class="Header__Title">{{ title }}</h1>
-		<input v-model="text" placeholder="Search a City" />
+		<input
+			type="text"
+			v-model="cityName"
+			placeholder="Search..."
+			@keypress="fetchWeather"
+		/>
 		<Date class="Header__Date" />
-		<h2 v-bind="text"></h2>
 		<div class="Header__Temperature--wrapper">
-			<Temperature />
+			<div class="Header__Temperature--city">{{ weather.name }}</div>
+			<div class="Header__Temperature--temperature">25C</div>
+			<div class="Header__Temperature--weather">Windy</div>
 		</div>
 	</div>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .Header {
 	display: flex;
 	flex-flow: column;
