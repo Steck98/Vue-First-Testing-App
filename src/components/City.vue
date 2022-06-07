@@ -10,26 +10,33 @@ export default {
 	components: { Date },
 	data() {
 		return {
-			api_key: "4090cf573ee1724ee3524ada332cb41c",
-			url_base: "https://api.openweathermap.org/data/3.0/",
+			api_key: "bac6fe38ebf84821a07110419220706",
+			url_base: "http://api.weatherapi.com/v1/current.json?key=",
 			query: "",
-			weather: {},
+			weather: {
+				name: "Chose City",
+				temp_c: "Temperature",
+				text: "Weather Condition",
+			},
 		};
 	},
 	methods: {
 		fetchWeather(e) {
 			if (e.key == "Enter") {
-				fetch(
-					`${this.url_base}weather?q=${this.query}&units=metric&APPID=${this.api_key}`
-				)
+				fetch(`${this.url_base}${this.api_key}&q=${this.query}&aqi=no`)
 					.then((res) => {
 						return res.json();
 					})
 					.then(this.setResults);
 			}
 		},
+
 		setResults(results) {
-			this.weather = results;
+			// this.weather = results;
+			this.weather.name = results.location.name;
+			this.weather.temp_c = results.current.temp_c;
+			this.weather.text = results.current.condition.text;
+			console.log(results);
 		},
 	},
 };
@@ -40,15 +47,22 @@ export default {
 		<h1 class="Header__Title">{{ title }}</h1>
 		<input
 			type="text"
-			v-model="cityName"
+			v-model="query"
 			placeholder="Search..."
 			@keypress="fetchWeather"
 		/>
 		<Date class="Header__Date" />
+
 		<div class="Header__Temperature--wrapper">
-			<div class="Header__Temperature--city">{{ weather.name }}</div>
-			<div class="Header__Temperature--temperature">25C</div>
-			<div class="Header__Temperature--weather">Windy</div>
+			<div class="Header__Temperature--city">
+				{{ this.weather.name }}
+			</div>
+			<div class="Header__Temperature--temperature">
+				{{ this.weather.temp_c }}°C
+			</div>
+			<div class="Header__Temperature--weather">
+				{{ this.weather.text }}
+			</div>
 		</div>
 	</div>
 </template>
